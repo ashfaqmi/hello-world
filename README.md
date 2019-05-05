@@ -40,6 +40,7 @@ Create a Cloud Identity and Access Management (Cloud IAM) service account to del
 2. Store the service account email address and our current project ID in environment variables for use in later commands:
 
 `$ export SA_EMAIL=$(gcloud iam service-accounts list --filter="displayName:spinnaker-storage-account" --format='value(email)')`
+
 `$ export PROJECT=$(gcloud info --format='value(config.project)')`
 
 3. Bind the storage.admin role to our service account:
@@ -57,16 +58,24 @@ Create a Cloud Identity and Access Management (Cloud IAM) service account to del
 
 `$ wget https://storage.googleapis.com/kubernetes-helm/helm-v2.9.0-linux-amd64.tar.gz`
 
+
 2. Unzip the file to your local system:
 
 `$ tar zxfv helm-v2.9.0-linux-amd64.tar.gz`
+
 `$ sudo chmod +x linux-amd64/helm && sudo mv linux-amd64/helm /usr/bin/helm`
+
 
 3. Grant Tiller, the server side of Helm, the cluster-admin role in your cluster:
 
-`$ kubectl create clusterrolebinding user-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value account)`
-`$ kubectl create serviceaccount tiller --namespace kube-system`
-`$ kubectl create clusterrolebinding tiller-admin-binding --clusterrole=cluster-admin --serviceaccount=kube-system:tiller`
+```
+$ kubectl create clusterrolebinding user-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value account)
+
+$ kubectl create serviceaccount tiller --namespace kube-system
+
+$ kubectl create clusterrolebinding tiller-admin-binding --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+```
+
 
 4. Grant Spinnaker the cluster-admin role so it can deploy resources across all namespaces:
 
@@ -75,6 +84,7 @@ Create a Cloud Identity and Access Management (Cloud IAM) service account to del
 5. Initialize Helm to install Tiller in your cluster:
 
 `$ helm init --service-account=tiller --upgrade`
+
 `$ helm repo update`
 
 6. Ensure that Helm is properly installed by running the following command. If Helm is correctly installed, v2.9.0 appears for both client and server.
@@ -87,6 +97,7 @@ Create a Cloud Identity and Access Management (Cloud IAM) service account to del
 1. Create a bucket for Spinnaker to store its pipeline configuration:
 
 `$ export PROJECT=$(gcloud info --format='value(config.project)')`
+
 `$ export BUCKET=$PROJECT-spinnaker-configgsutil mb -c regional -l us-central1 gs://$BUCKET`
 
 2. Create the configuration file:
@@ -125,6 +136,7 @@ Use the Helm command-line interface to deploy the chart with the configuration s
 2. After the command completes, run the following command to set up port forwarding to the Spinnaker UI from Cloud Shell:
 
 `$ export DECK_POD=$(kubectl get pods --namespace default -l  "component=deck" -o jsonpath="{.items[0].metadata.name}")`
+
 `$ kubectl port-forward --namespace default $DECK_POD 8080:9000 >> /dev/null &`
 
 To access Spinnaker from browser, expose and open port 30145.
@@ -162,6 +174,7 @@ www.listen(8080);
 2. Creare a Dockerfile
 
 `$ vi Dockerfile`
+
 `$ cat Dockerfile`
 
 ```
