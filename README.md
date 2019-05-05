@@ -367,3 +367,5 @@ kubernetes                           ClusterIP      10.51.240.1     <none>      
 ```
 
 Browse through http://35.232.81.41/ to see the deployed Hello-World Application.
+
+![](Images/Hello%20World.PNG)
