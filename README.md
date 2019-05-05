@@ -133,6 +133,8 @@ To access Spinnaker from browser, expose and open port 30145.
 
 http://35.238.154.244:30145/#/infrastructure
 
+**Spinnaker UI**
+
 ![](Images/Spinnaker%20UI.PNG)
 
 
@@ -190,6 +192,8 @@ CMD node helloWorld.js
 
 `$ git push`
 
+**Hello World - Repository**
+
 ![](Images/Repository%20-%20Hello%20World.PNG)
 
 
@@ -202,9 +206,11 @@ Configure Google Container Builder to build and push Docker images every time we
 3. Select your newly created hello-world repository from the list, and click Continue.
 4. Set the following trigger settings as shown in the screenshot.
 
+Build Trigger settings
 
 ![](Images/Build%20Trigger%20Config.PNG)
 
+Build Trigger created
 ![](Images/Build%20Trigger.PNG)
 
 
@@ -257,9 +263,11 @@ http://35.238.154.244:30145/#/infrastructure
 
 1. Click on Load Balancers and click on create Load Balancer
 
-2. Specify the target port; See screenshot below;
+2. Specify the target port and once the load balancer is created, it will look like below;
 
 ![](Images/Hello%20World%20Load%20Balancer.PNG)
+
+
 
 **Create the deployment pipeline**
 
@@ -279,22 +287,33 @@ Now we create the continuous delivery pipeline.
 
 6. Refer screenshots below and Configure Deployment Cluster.
 
-Basic Settings
+Configure Deployment Cluster - Basic Settings
+
 ![](Images/Deploy%20config%20-%20Basic%20Settings.PNG)
 
-Deployment
+
+Configure Deployment Cluster - Deployment
+
 ![](Images/Deploy%20config%20-%20Deployment.PNG)
 
-Load Balancers
+
+Configure Deployment Cluster - Load Balancers
+
 ![](Images/Deploy%20config%20-%20Load%20Balancers.PNG)
 
-Replicas
+
+Configure Deployment Cluster - Replicas
+
 ![](Images/Deploy%20config%20-%20Auto%20Scaling%20and%20Replicas.PNG)
 
-Container
+
+Configure Deployment Cluster - Container
+
 ![](Images/Deploy%20config%20-%20Container%20and%20Ports.PNG)
 
-Probes
+
+Configure Deployment Cluster - Probes
+
 ![](Images/Deploy%20config%20-%20Container%20Probes.PNG)
 
 
@@ -303,6 +322,8 @@ Probes
 8. Go to Task Status under Details in Pipeline to see the progress.
 
 9. When the status is "Status: SUCCEEDED", go to cloud shell and do the following;
+
+Deployment succeeded.
 
 ![](Images/Hello%20World%20Deployment%20Pipeline.PNG)
 
