@@ -24,8 +24,10 @@ This document explains how to configure Blue Green deployment of a nodeJS applic
 
 In a minute or two the cluster will be created and ready to go.
 
-Screenshots ------------
-Cluster and Nodes --------
+![](Images/Kubernetes%20Cluster.PNG)
+
+![](Images/Kubernetes%20Nodes.PNG)
+
 
 **Configure identity and access management**
 
@@ -131,8 +133,7 @@ To access Spinnaker from browser, expose and open port 30145.
 
 http://35.238.154.244:30145/#/infrastructure
 
-Screenshot - Spinnaker
-
+![](Images/Spinnaker%20UI.PNG)
 
 
 **Building the container image**\
@@ -189,9 +190,8 @@ CMD node helloWorld.js
 
 `$ git push`
 
+![](Images/Repository%20-%20Hello%20World.PNG)
 
-
-Screenshot - Repository files
 
 **Configuring the build triggers**
 
@@ -203,11 +203,15 @@ Configure Google Container Builder to build and push Docker images every time we
 4. Set the following trigger settings as shown in the screenshot.
 
 
-Screenshot
+![](Images/Build%20Trigger%20Config.PNG)
+
+![](Images/Build%20Trigger.PNG)
+
+
 
 **Build image**
 
-Push the first image using the following steps:
+Create the first image using the following steps:
 
 1. Go to source code folder in Cloud Shell.
 
@@ -224,6 +228,8 @@ Push the first image using the following steps:
 5. Go to Container registry to see the recently build image.
 
 gcr.io/steam-bee-239111/hello-world@sha256:91ff13d01441b2eedf169953cb50f063f923e10730253124d789ce78e3dd0610
+
+![](Images/Hello-World%20Image%20registry.PNG)
 
 
 **Configuring deployment pipelines**
@@ -253,7 +259,7 @@ http://35.238.154.244:30145/#/infrastructure
 
 2. Specify the target port; See screenshot below;
 
-Screenshot - Load Balancer
+![](Images/Hello%20World%20Load%20Balancer.PNG)
 
 **Create the deployment pipeline**
 
@@ -263,7 +269,7 @@ Now we create the continuous delivery pipeline.
 
 2. Configure automated trigger
 
-Screenshot
+![](Images/Automated%20Trigger.PNG)
 
 3. Click on Add Stage
 
@@ -273,13 +279,32 @@ Screenshot
 
 6. Refer screenshots below and Configure Deployment Cluster.
 
-Screenshots.
+Basic Settings
+![](Images/Deploy%20config%20-%20Basic%20Settings.PNG)
+
+Deployment
+![](Images/Deploy%20config%20-%20Deployment.PNG)
+
+Load Balancers
+![](Images/Deploy%20config%20-%20Load%20Balancers.PNG)
+
+Replicas
+![](Images/Deploy%20config%20-%20Auto%20Scaling%20and%20Replicas.PNG)
+
+Container
+![](Images/Deploy%20config%20-%20Container%20and%20Ports.PNG)
+
+Probes
+![](Images/Deploy%20config%20-%20Container%20Probes.PNG)
+
 
 7. Once the pipeline is created, "click on Start Manual Execution"
 
 8. Go to Task Status under Details in Pipeline to see the progress.
 
 9. When the status is "Status: SUCCEEDED", go to cloud shell and do the following;
+
+![](Images/Hello%20World%20Deployment%20Pipeline.PNG)
 
 ```
 muhammedashfaqmi@cloudshell:~/hello-world (steam-bee-239111)$ kubectl get pods
