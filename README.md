@@ -1,8 +1,9 @@
 # hello-world
 Blue Green deployment of nodeJS app on Google Kubenetes engine using Spinnaker and Helm
 
+This document explains how to configure Blue Green deployment of a nodeJS application on Google Kubernetes Engine using Spinnaker and Helm.
 
-**Enable the APIs needed on GCP**
+**As a prerequisite, enable the APIs needed on GCP**
 
 - Kubernetes API
 - Compute API
@@ -137,4 +138,186 @@ Screenshot - Spinnaker
 **Building the container image**\
 
 
+1. Create a simple "Hello World" nodeJS app.
 
+`$ vi helloWorld.js`
+
+`$ cat helloWorld.js`
+
+```
+var http = require('http');
+
+var handleRequest = function(request, response) {
+  console.log('Received request for URL: ' + request.url);
+  response.writeHead(200);
+  response.end('Hello World!');
+};
+var www = http.createServer(handleRequest);
+www.listen(8080);
+```
+
+2. Creare a Dockerfile
+
+`$ vi Dockerfile`
+`$ cat Dockerfile`
+
+```
+FROM node:6.14.2
+EXPOSE 8080
+COPY helloWorld.js .
+CMD node helloWorld.js
+```
+
+
+3. Create a new repository on Google Cloud Source Repositories
+
+4. Clone to the new repository
+
+`$ git clone https://source.developers.google.com/p/steam-bee-239111/r/hello-world`
+
+5. Move files to hello-world folder.
+
+`$ mv * hello-world/`
+
+`$ cd hello-world`
+
+6. Push files to the repository
+
+`$ git add .`
+
+`$ git commit -m "Initial"`
+
+`$ git push`
+
+
+
+Screenshot - Repository files
+
+**Configuring the build triggers**
+
+Configure Google Container Builder to build and push Docker images every time we push Git tags to our source repository. Container Builder automatically checks out the source code, builds the Docker image from the Dockerfile in the repository, and pushes that image to Container Registry.
+
+1. In the GCP Console, click Build Triggers in the Container Registry section.
+2. Select Cloud Source Repository and click Continue.
+3. Select your newly created hello-world repository from the list, and click Continue.
+4. Set the following trigger settings as shown in the screenshot.
+
+
+Screenshot
+
+**Build image**
+
+Push the first image using the following steps:
+
+1. Go to source code folder in Cloud Shell.
+
+2. Create a Git tag:
+
+`$ git tag v1.0.0`
+
+3. Push the tag:
+
+`$ git push --tags`
+
+4. In Container Registry, click Build History to check that the build has been triggered. If not, verify the trigger was configured properly in the previous section.
+
+5. Go to Container registry to see the recently build image.
+
+gcr.io/steam-bee-239111/hello-world@sha256:91ff13d01441b2eedf169953cb50f063f923e10730253124d789ce78e3dd0610
+
+
+**Configuring deployment pipelines**
+
+we need to deploy automatically build images to the Kubernetes cluster.
+
+In the Spinnaker UI
+
+http://35.238.154.244:30145/#/infrastructure
+
+**Create the application**
+
+1. In the Spinnaker UI, click Actions, then click Create Application.
+
+2. In the New Application dialog, enter the following fields:
+
+`Name: helloworld`
+
+`Owner Email: muhammedashfaqmi@gmail.com`
+
+3. Click Create.
+
+
+**Create a Load Balancer**
+
+1. Click on Load Balancers and click on create Load Balancer
+
+2. Specify the target port; See screenshot below;
+
+Screenshot - Load Balancer
+
+**Create the deployment pipeline**
+
+Now we create the continuous delivery pipeline. 
+
+1. Create a new pipeline named say “Deploy”.
+
+2. Configure automated trigger
+
+Screenshot
+
+3. Click on Add Stage
+
+4. Select "Deploy" as type.
+
+5. Under Deploy Configuration, Click on Add Server Group.
+
+6. Refer screenshots below and Configure Deployment Cluster.
+
+Screenshots.
+
+7. Once the pipeline is created, "click on Start Manual Execution"
+
+8. Go to Task Status under Details in Pipeline to see the progress.
+
+9. When the status is "Status: SUCCEEDED", go to cloud shell and do the following;
+
+```
+muhammedashfaqmi@cloudshell:~/hello-world (steam-bee-239111)$ kubectl get pods
+NAME                                        READY     STATUS             RESTARTS   AGE
+cd-jenkins-648d96f6f-zxc4p                  1/1       Running            0          5d
+cd-redis-674dd48cff-5gxtr                   1/1       Running            0          5d
+cd-spinnaker-clouddriver-78b758c655-mpwv6   1/1       Running            0          5d
+cd-spinnaker-deck-5fd7789b79-lxm89          1/1       Running            0          5d
+cd-spinnaker-echo-5844f87c88-hf6nd          1/1       Running            0          5d
+cd-spinnaker-front50-59b74d8599-swm7w       1/1       Running            0          5d
+cd-spinnaker-gate-65c559cc65-mmzt6          1/1       Running            2          5d
+cd-spinnaker-igor-587df9745d-lwlbg          1/1       Running            0          5d
+cd-spinnaker-orca-5ccccdc455-vdvpr          1/1       Running            1          5d
+cd-spinnaker-rosco-65498994fd-gc5rw         1/1       Running            0          5d
+cd-upload-build-image-2m5r8                 0/1       Completed          0          5d
+cd-upload-run-pipeline-mp7ct                0/1       Completed          0          5d
+cd-upload-run-script-kwrxn                  0/1       Completed          0          5d
+helloworld-v001-4bdph                       1/1       Running            0          2h
+helloworld-v001-65xk6                       1/1       Running            0          2h
+```
+
+```
+muhammedashfaqmi@cloudshell:~/hello-world (steam-bee-239111)$ kubectl get svc
+NAME                                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)                       AGE
+cd-jenkins                           ClusterIP      10.51.244.183   <none>           8080/TCP                      5d
+cd-jenkins-agent                     ClusterIP      10.51.250.229   <none>           50000/TCP                     5d
+cd-redis                             ClusterIP      10.51.248.149   <none>           6379/TCP                      5d
+cd-spinnaker-clouddriver             ClusterIP      10.51.240.117   <none>           7002/TCP                      5d
+cd-spinnaker-deck                    ClusterIP      10.51.241.44    <none>           9000/TCP                      5d
+cd-spinnaker-deck-5fd7789b79-lxm89   NodePort       10.51.244.249   <none>           9000:30145/TCP                5d
+cd-spinnaker-echo                    ClusterIP      10.51.243.236   <none>           8089/TCP                      5d
+cd-spinnaker-front50                 ClusterIP      10.51.252.47    <none>           8080/TCP                      5d
+cd-spinnaker-gate                    ClusterIP      10.51.249.70    <none>           8084/TCP                      5d
+cd-spinnaker-igor                    ClusterIP      10.51.240.44    <none>           8088/TCP,8080/TCP,50000/TCP   5d
+cd-spinnaker-orca                    ClusterIP      10.51.252.144   <none>           8083/TCP                      5d
+cd-spinnaker-rosco                   ClusterIP      10.51.240.71    <none>           8087/TCP                      5d
+helloworld                           LoadBalancer   10.51.253.175   35.232.81.41     80:32356/TCP                  2h
+kubernetes                           ClusterIP      10.51.240.1     <none>           443/TCP                       5d
+```
+
+Browse through http://35.232.81.41/ to see the deployed Hello-World Application.
