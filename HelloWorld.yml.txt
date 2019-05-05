@@ -1,0 +1,67 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: helloworld
+    cluster: helloworld
+    helloworld: "true"
+    load-balancer-helloworld: "true"
+    replication-controller: helloworld-v001
+    version: "1"
+  name: helloworld
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/helloworld
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      helloworld: "true"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: helloworld
+        cluster: helloworld
+        helloworld: "true"
+        load-balancer-helloworld: "true"
+        replication-controller: helloworld-v001
+        version: "1"
+    spec:
+      containers:
+      - image: gcr.io/steam-bee-239111/hello-world:61a33702af64fbdc803d8c4cad866b92cb217fbe
+        imagePullPolicy: Always
+        name: steam-bee-239111-hello-world
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: gcr
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
