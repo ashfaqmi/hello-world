@@ -1,0 +1,705 @@
+--- 
+appConfig: {}
+application: helloworld
+authentication: 
+  allowedAccounts: 
+    - gcr
+    - local
+  user: anonymous
+buildTime: 1557048369703
+canceled: false
+canceledBy: ~
+cancellationReason: ~
+context: {}
+endTime: 1557048521639
+executingInstance: 1@cd-spinnaker-orca-5ccccdc455-vdvpr
+executionEngine: v3
+id: ef48b1c0-7531-447f-a254-87f437b8d167
+initialConfig: {}
+keepWaitingPipelines: false
+limitConcurrent: true
+name: Deploy
+notifications: []
+parallel: true
+paused: ~
+pipelineConfigId: b3a6500f-dfd1-4cb6-ad0e-e7518fa77e17
+stages: 
+  - 
+    context: 
+      account: local
+      application: helloworld
+      capacity: 
+        max: 4
+        min: 2
+      capacitySnapshot: 
+        desiredCapacity: 2
+        maxSize: 2
+        minSize: 2
+      cloudProvider: kubernetes
+      containers: 
+        - 
+          args: []
+          command: []
+          envVars: []
+          imageDescription: 
+            account: gcr
+            fromTrigger: true
+            imageId: "gcr.io/steam-bee-239111/hello-world:61a33702af64fbdc803d8c4cad866b92cb217fbe"
+            registry: gcr.io
+            repository: steam-bee-239111/hello-world
+            tag: 61a33702af64fbdc803d8c4cad866b92cb217fbe
+          imagePullPolicy: ALWAYS
+          limits: 
+            cpu: ~
+            memory: ~
+          livenessProbe: ~
+          name: steam-bee-239111-hello-world
+          ports: 
+            - 
+              containerPort: 8080
+              hostIp: ~
+              hostPort: ~
+              name: http
+              protocol: TCP
+          readinessProbe: 
+            failureThreshold: 3
+            handler: 
+              execAction: 
+                commands: []
+              httpGetAction: 
+                path: /
+                port: 8080
+                uriScheme: HTTP
+              tcpSocketAction: 
+                port: 80
+              type: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          requests: 
+            cpu: ~
+            memory: ~
+          volumeMounts: []
+      deploy.account.name: local
+      deploy.server.groups: 
+        default: 
+          - helloworld-v001
+      deployment: 
+        deploymentStrategy: 
+          rollingUpdate: 
+            maxSurge: 1
+            maxUnavailable: "0"
+          type: RollingUpdate
+        enabled: true
+        minReadySeconds: 0
+      force.cache.refresh.errors: []
+      interestingHealthProviderNames: 
+        - KubernetesContainer
+        - KubernetesPod
+      kato.last.task.id: 
+        id: "89"
+      kato.result.expected: false
+      kato.tasks: 
+        - 
+          history: 
+            - 
+              phase: ORCHESTRATION
+              status: "Initializing Orchestration Task..."
+            - 
+              phase: ORCHESTRATION
+              status: "Processing op: DeployKubernetesAtomicOperation"
+            - 
+              phase: DEPLOY
+              status: "Initializing creation of replica set."
+            - 
+              phase: DEPLOY
+              status: "Looking up provided namespace..."
+            - 
+              phase: DEPLOY
+              status: "Looking up next sequence index for cluster helloworld..."
+            - 
+              phase: DEPLOY
+              status: "Found ancestor server group, parsing details (name: helloworld-v000)"
+            - 
+              phase: DEPLOY
+              status: "Replica set name chosen to be helloworld-v001."
+            - 
+              phase: DEPLOY
+              status: "Building replica set..."
+            - 
+              phase: DEPLOY
+              status: "Deployed replica set helloworld-v001"
+            - 
+              phase: DEPLOY
+              status: "Updating deployment..."
+            - 
+              phase: DEPLOY
+              status: "Configured deployment helloworld"
+            - 
+              phase: DEPLOY
+              status: "Attaching a horizontal pod autoscaler..."
+            - 
+              phase: ORCHESTRATION
+              status: "Orchestration completed."
+          id: "89"
+          resultObjects: 
+            - 
+              ancestorServerGroupNameByRegion: 
+                default: helloworld-v000
+            - 
+              deployedNames: []
+              deployedNamesByLocation: {}
+              messages: []
+              serverGroupNameByRegion: 
+                default: helloworld-v001
+              serverGroupNames: 
+                - "default:helloworld-v001"
+          status: 
+            completed: true
+            failed: false
+      lastCapacityCheck: 
+        down: 1
+        failed: 0
+        outOfService: 0
+        starting: 0
+        succeeded: 0
+        unknown: 0
+        up: 0
+      loadBalancers: 
+        - helloworld
+      maxRemainingAsgs: 2
+      name: "Deploy in default"
+      namespace: default
+      nodeSelector: {}
+      notification.type: createdeploy
+      podAnnotations: {}
+      processed.server.groups: []
+      provider: kubernetes
+      refId: "1"
+      refreshed.server.groups: 
+        - 
+          account: local
+          asgName: helloworld-v001
+          region: default
+          serverGroupName: helloworld-v001
+      region: default
+      replicaSetAnnotations: {}
+      requisiteStageRefIds: []
+      scalingPolicy: 
+        cpuUtilization: 
+          target: 50
+      source: 
+        account: local
+        asgName: helloworld-v000
+        region: default
+        serverGroupName: helloworld-v000
+        useSourceCapacity: ~
+      stageDetails: 
+        endTime: 1557048521568
+        isSynthetic: true
+        name: "Deploy in default"
+        startTime: 1557048369786
+        type: createServerGroup
+      strategy: redblack
+      targetDesiredSize: 2
+      targetSize: 2
+      terminationGracePeriodSeconds: 30
+      type: createServerGroup
+      volumeSources: []
+      zeroDesiredCapacityCount: 0
+      zones: []
+    endTime: 1557048521568
+    id: 8d73675a-131d-4468-ae36-2891b0095a2b-1-Deployindefault
+    initializationStage: false
+    lastModified: ~
+    name: "Deploy in default"
+    parentStageId: 8d73675a-131d-4468-ae36-2891b0095a2b
+    refId: 1=1
+    requisiteStageRefIds: []
+    scheduledTime: 0
+    startTime: 1557048369786
+    status: SUCCEEDED
+    syntheticStageOwner: STAGE_BEFORE
+    tasks: 
+      - 
+        endTime: 1557048369849
+        id: "1"
+        implementingClass: com.netflix.spinnaker.orca.kato.pipeline.strategy.DetermineSourceServerGroupTask
+        loopEnd: false
+        loopStart: false
+        name: determineSourceServerGroup
+        stageEnd: false
+        stageStart: true
+        startTime: 1557048369794
+        status: SUCCEEDED
+      - 
+        endTime: 1557048369883
+        id: "2"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.DetermineHealthProvidersTask
+        loopEnd: false
+        loopStart: false
+        name: determineHealthProviders
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048369860
+        status: SUCCEEDED
+      - 
+        endTime: 1557048369973
+        id: "3"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.CreateServerGroupTask
+        loopEnd: false
+        loopStart: false
+        name: createServerGroup
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048369896
+        status: SUCCEEDED
+      - 
+        endTime: 1557048380031
+        id: "4"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.MonitorKatoTask
+        loopEnd: false
+        loopStart: false
+        name: monitorDeploy
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048369984
+        status: SUCCEEDED
+      - 
+        endTime: 1557048380080
+        id: "5"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048380046
+        status: SUCCEEDED
+      - 
+        endTime: 1557048410319
+        id: "6"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.instance.WaitForUpInstancesTask
+        loopEnd: false
+        loopStart: false
+        name: waitForUpInstances
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048380091
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420387
+        id: "7"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048410329
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420495
+        id: "8"
+        implementingClass: com.netflix.spinnaker.orca.igor.tasks.GetCommitsTask
+        loopEnd: false
+        loopStart: false
+        name: getCommits
+        stageEnd: true
+        stageStart: false
+        startTime: 1557048420398
+        status: SUCCEEDED
+    type: createServerGroup
+  - 
+    context: 
+      allowDeleteActive: false
+      cloudProvider: kubernetes
+      cluster: helloworld
+      credentials: local
+      deploy.server.groups: {}
+      force.cache.refresh.errors: []
+      interestingHealthProviderNames: 
+        - KubernetesContainer
+        - KubernetesPod
+      namespace: default
+      processed.server.groups: []
+      refreshed.server.groups: []
+      retainLargerOverNewer: false
+      shrinkToSize: 2
+      stageDetails: 
+        endTime: 1557048420777
+        isSynthetic: true
+        name: shrinkCluster
+        startTime: 1557048420507
+        type: shrinkCluster
+      zones: []
+    endTime: 1557048420777
+    id: 8d73675a-131d-4468-ae36-2891b0095a2b-1-Deployindefault-1-shrinkCluster
+    initializationStage: false
+    lastModified: ~
+    name: shrinkCluster
+    parentStageId: 8d73675a-131d-4468-ae36-2891b0095a2b-1-Deployindefault
+    refId: 1=1>1
+    requisiteStageRefIds: []
+    scheduledTime: 0
+    startTime: 1557048420507
+    status: SUCCEEDED
+    syntheticStageOwner: STAGE_AFTER
+    tasks: 
+      - 
+        endTime: 1557048420541
+        id: "1"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.DetermineHealthProvidersTask
+        loopEnd: false
+        loopStart: false
+        name: determineHealthProviders
+        stageEnd: false
+        stageStart: true
+        startTime: 1557048420518
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420619
+        id: "2"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.cluster.ShrinkClusterTask
+        loopEnd: false
+        loopStart: false
+        name: shrinkCluster
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420552
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420667
+        id: "3"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.MonitorKatoTask
+        loopEnd: false
+        loopStart: false
+        name: monitorShrinkCluster
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420638
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420699
+        id: "4"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420678
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420733
+        id: "5"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.cluster.WaitForClusterShrinkTask
+        loopEnd: false
+        loopStart: false
+        name: waitForClusterShrink
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420710
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420766
+        id: "6"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: true
+        stageStart: false
+        startTime: 1557048420744
+        status: SUCCEEDED
+    type: shrinkCluster
+  - 
+    context: 
+      cloudProvider: kubernetes
+      cluster: helloworld
+      credentials: local
+      deploy.account.name: local
+      deploy.server.groups: 
+        default: 
+          - helloworld-v000
+      force.cache.refresh.errors: []
+      interestingHealthProviderNames: 
+        - KubernetesContainer
+        - KubernetesPod
+      kato.last.task.id: 
+        id: "90"
+      kato.tasks: 
+        - 
+          history: 
+            - 
+              phase: ORCHESTRATION
+              status: "Initializing Orchestration Task..."
+            - 
+              phase: ORCHESTRATION
+              status: "Processing op: DisableKubernetesAtomicOperation"
+            - 
+              phase: DISABLE
+              status: "Initializing disable operation..."
+            - 
+              phase: DISABLE
+              status: "Looking up provided namespace..."
+            - 
+              phase: DISABLE
+              status: "Finding requisite server group..."
+            - 
+              phase: DISABLE
+              status: "Getting list of attached services..."
+            - 
+              phase: DISABLE
+              status: "Resetting server group service template labels and selectors..."
+            - 
+              phase: DISABLE
+              status: "Resetting service labels for each pod..."
+            - 
+              phase: DISABLE
+              status: "Operating on 100% of pods"
+            - 
+              phase: DISABLE
+              status: "Finished disabling server group."
+            - 
+              phase: ORCHESTRATION
+              status: "Orchestration completed."
+          id: "90"
+          resultObjects: []
+          status: 
+            completed: true
+            failed: false
+      namespace: default
+      notification.type: disableservergroup
+      preferLargerOverNewer: false
+      processed.server.groups: []
+      refreshed.server.groups: 
+        - 
+          account: local
+          asgName: helloworld-v000
+          region: default
+          serverGroupName: helloworld-v000
+      remainingEnabledServerGroups: 1
+      stageDetails: 
+        endTime: 1557048521554
+        isSynthetic: true
+        name: disableCluster
+        startTime: 1557048420788
+        type: disableCluster
+      zones: []
+    endTime: 1557048521554
+    id: 8d73675a-131d-4468-ae36-2891b0095a2b-1-Deployindefault-2-disableCluster
+    initializationStage: false
+    lastModified: ~
+    name: disableCluster
+    parentStageId: 8d73675a-131d-4468-ae36-2891b0095a2b-1-Deployindefault
+    refId: 1=1>2
+    requisiteStageRefIds: 
+      - 1=1>1
+    scheduledTime: 0
+    startTime: 1557048420788
+    status: SUCCEEDED
+    syntheticStageOwner: STAGE_AFTER
+    tasks: 
+      - 
+        endTime: 1557048420822
+        id: "1"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.DetermineHealthProvidersTask
+        loopEnd: false
+        loopStart: false
+        name: determineHealthProviders
+        stageEnd: false
+        stageStart: true
+        startTime: 1557048420799
+        status: SUCCEEDED
+      - 
+        endTime: 1557048420922
+        id: "2"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.cluster.DisableClusterTask
+        loopEnd: false
+        loopStart: false
+        name: disableCluster
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420836
+        status: SUCCEEDED
+      - 
+        endTime: 1557048430996
+        id: "3"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.MonitorKatoTask
+        loopEnd: false
+        loopStart: false
+        name: monitorDisableCluster
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048420932
+        status: SUCCEEDED
+      - 
+        endTime: 1557048431040
+        id: "4"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048431007
+        status: SUCCEEDED
+      - 
+        endTime: 1557048511476
+        id: "5"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.cluster.WaitForClusterDisableTask
+        loopEnd: false
+        loopStart: false
+        name: waitForClusterDisable
+        stageEnd: false
+        stageStart: false
+        startTime: 1557048431051
+        status: SUCCEEDED
+      - 
+        endTime: 1557048521542
+        id: "6"
+        implementingClass: com.netflix.spinnaker.orca.clouddriver.tasks.servergroup.ServerGroupCacheForceRefreshTask
+        loopEnd: false
+        loopStart: false
+        name: forceCacheRefresh
+        stageEnd: true
+        stageStart: false
+        startTime: 1557048511489
+        status: SUCCEEDED
+    type: disableCluster
+  - 
+    context: 
+      clusters: 
+        - 
+          account: local
+          application: helloworld
+          capacity: 
+            max: 4
+            min: 2
+          cloudProvider: kubernetes
+          containers: 
+            - 
+              args: []
+              command: []
+              envVars: []
+              imageDescription: 
+                account: gcr
+                fromTrigger: true
+                imageId: "gcr.io/steam-bee-239111/hello-world:61a33702af64fbdc803d8c4cad866b92cb217fbe"
+                registry: gcr.io
+                repository: steam-bee-239111/hello-world
+                tag: 61a33702af64fbdc803d8c4cad866b92cb217fbe
+              imagePullPolicy: ALWAYS
+              limits: 
+                cpu: ~
+                memory: ~
+              livenessProbe: ~
+              name: steam-bee-239111-hello-world
+              ports: 
+                - 
+                  containerPort: 8080
+                  hostIp: ~
+                  hostPort: ~
+                  name: http
+                  protocol: TCP
+              readinessProbe: 
+                failureThreshold: 3
+                handler: 
+                  execAction: 
+                    commands: []
+                  httpGetAction: 
+                    path: /
+                    port: 8080
+                    uriScheme: HTTP
+                  tcpSocketAction: 
+                    port: 80
+                  type: HTTP
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                successThreshold: 1
+                timeoutSeconds: 1
+              requests: 
+                cpu: ~
+                memory: ~
+              volumeMounts: []
+          deployment: 
+            deploymentStrategy: 
+              rollingUpdate: 
+                maxSurge: 1
+                maxUnavailable: "0"
+              type: RollingUpdate
+            enabled: true
+            minReadySeconds: 0
+          interestingHealthProviderNames: 
+            - KubernetesContainer
+            - KubernetesPod
+          loadBalancers: 
+            - helloworld
+          maxRemainingAsgs: 2
+          namespace: default
+          nodeSelector: {}
+          podAnnotations: {}
+          provider: kubernetes
+          region: default
+          replicaSetAnnotations: {}
+          scalingPolicy: 
+            cpuUtilization: 
+              target: 50
+          strategy: redblack
+          targetSize: 2
+          terminationGracePeriodSeconds: 30
+          volumeSources: []
+      refId: "1"
+      requisiteStageRefIds: []
+      stageDetails: 
+        endTime: 1557048521628
+        isSynthetic: false
+        name: Deploy
+        startTime: 1557048369760
+        type: deploy
+    endTime: 1557048521628
+    id: 8d73675a-131d-4468-ae36-2891b0095a2b
+    initializationStage: true
+    lastModified: ~
+    name: Deploy
+    parentStageId: ~
+    refId: "1"
+    requisiteStageRefIds: []
+    scheduledTime: 0
+    startTime: 1557048369760
+    status: SUCCEEDED
+    syntheticStageOwner: ~
+    tasks: 
+      - 
+        endTime: 1557048521613
+        id: "1"
+        implementingClass: com.netflix.spinnaker.orca.kato.pipeline.ParallelDeployStage$CompleteParallelDeployTask
+        loopEnd: false
+        loopStart: false
+        name: completeParallelDeploy
+        stageEnd: true
+        stageStart: true
+        startTime: 1557048521590
+        status: SUCCEEDED
+    type: deploy
+startTime: 1557048369747
+status: SUCCEEDED
+trigger: 
+  account: gcr
+  buildInfo: 
+    taggedImages: 
+      - 
+        registry: gcr.io
+        repository: steam-bee-239111/hello-world
+        tag: 61a33702af64fbdc803d8c4cad866b92cb217fbe
+  description: "(Docker Registry) gcr: steam-bee-239111/hello-world"
+  enabled: true
+  notifications: []
+  organization: steam-bee-239111
+  registry: gcr.io
+  repository: steam-bee-239111/hello-world
+  tag: 61a33702af64fbdc803d8c4cad866b92cb217fbe
+  type: manual
+  user: "[anonymous]"
